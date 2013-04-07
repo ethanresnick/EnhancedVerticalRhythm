@@ -12,9 +12,9 @@ What's the problem?
 
 To see this issue with strict vertical rhythms in CSS, let's try to create one for the (fairly typical) scale of sizes below:
 
-16px for body text (i.e. <p>)
-20px for sub-heads (i.e. <h3>) and introductory paragraphs
-25px for headings (i.e. <h2>)
+- 16px for body text (i.e. <code>&lt;p&gt;</code>)
+- 20px for sub-heads (i.e. <code>&lt;h3&gt;</code>) and introductory paragraphs
+- 25px for headings (i.e. <code>&lt;h2&gt;</code>)
 
 Given 16px body text, we might choose a 22px baseline, which yields a comfortable <code>line-height</code> of 1.375em. But if we try to apply that baseline to our other sizes, things get messy.
 
@@ -45,17 +45,18 @@ All you have to do is select some elements and call countLines() on them, like t
 
 <code>$('h1, h2, h3').countLines();</code>
 
-That will take your <code>h1</code>s, <code>h2</code>s, and <code>h3</code>s and add the class "lines-#" (where # is the element's number of lines) to each one.
+That will take your <code>h1</code>s, <code>h2</code>s, and <code>h3</code>s and add the class <code>lines-#</code> (where # is the element's number of lines) to each one.
 
 So you could then write in your CSS:
-<pre><code>
-/* Make a title at the top of the page and get the main text to always start "in rhythm" after it. */
+<pre><code>/* Make a title at the top of the page and get the main text to always start "in rhythm" after it. */
 
-/* When the title is an even number of lines it will naturally fall back on the baseline and we add an additional baseline of space below it. */
+/* When the title is an even number of lines it will naturally fall back on the baseline and we add an 
+additional baseline of space below it. */
 h1 {font-size:24px; line-height:33px; margin-bottom:22px; /* i.e. 1 baseline */ } 
 
-/* When it's an odd number of lines we we need to add an extra half baseline to get back on rhythm. We do this and distribute most of the extra 11px to the top. */
-h1.lines-1, .h1-lines-3 { margin-top:8px; margin-bottom:25px; }
+/* When it's an odd number of lines we we need to add an extra half baseline to get back on rhythm. 
+We do this and distribute most of the extra 11px to the top. */
+h1.lines-1, h1.lines-3 { margin-top:8px; margin-bottom:25px; }
 </code></pre>
 
 The above CSS will work if the title is between 1 and 4 lines. But what if we have titles that can get much bigger than that? We could keep adding to the selector that handles odd line numbers (i.e. "h1.lines-5, h1.lines-7, h1.lines-9, etc"), but that's inelegant and could get long. So the plugin provides a simpler alternative if you're using incremental leading.
@@ -64,6 +65,6 @@ All you need to do is pass in the increments your using. Above, our increment wo
 
 <code>$('h1').countLines({'increments':[2]});</code>
 
-By passing two as an increment, all the <code><h1></code>s would now end up with another class too: "lines-mod-2-#", where # represents [the number of lines occupied by the heading] % 2. 
+By passing two as an increment, all the <code>&lt;h1&gt;</code>s would now end up with another class too: <code>lines-mod-2-#</code>, where # represents [the number of lines occupied by the heading] % 2. 
 
 In other words, whenever the heading takes up an even number of lines, the class will be "lines-mod-2-0", and whenever it takes up an odd number of lines the class will be "lines-mod-2-1", making it easy to cover all possible heading line counts in your CSS.
